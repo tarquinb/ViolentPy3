@@ -1,7 +1,0 @@
-beautifulsoup4==4.6.0
-numpy==1.14.1
-PyBluez==0.22
-pygeoip==0.3.2
-PyOBEX==0.27
-PyPDF2==1.26.0
-python-nmap==0.6.1
