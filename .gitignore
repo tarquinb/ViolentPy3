@@ -1,3 +1,4 @@
 .idea/**
 vp3/**
-
+*.sublime-project
+*.sublime-workspace
