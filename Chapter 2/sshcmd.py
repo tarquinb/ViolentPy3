@@ -1,5 +1,5 @@
 """
-BruteForce user credentials against a target
+Establish SSH connectiongiven a host and user credentials.
 
 usage: python autossh.py <host> <username> <password>
 """
@@ -7,8 +7,6 @@ import pexpect
 import os
 import sys
 import time
-
-PROMPT = ['# ', '>>> ', '> ', '\$ ']
 
 
 def send_cmd(child, cmd):
@@ -19,7 +17,7 @@ def send_cmd(child, cmd):
     :return: Prints output from SSH session to console
     """
     child.sendline(cmd)
-    child.expect(PROMPT)
+    child.expect([pexpect.EOF, pexpect.TIMEOUT, '# ', '>>> ', '> ', '\$ '])
     print('SSH session output\n')
     print(child.before)
 
@@ -38,15 +36,15 @@ def connect(user, host, passwd):
     ret = child.expect([pexpect.TIMEOUT, ssh_newkey, '[P|p]assword:'])
     if ret == 0:
         print('Error Connecting')
-        return
+        exit(1)
     if ret == 1:
         child.sendline('yes')
         ret = child.expect([pexpect.TIMEOUT, '[P|p]assword:'])
         if ret == 0:
             print('Error Connecting')
-            return
+            exit(1)
     child.sendline(passwd)
-    child.expect(PROMPT)
+    child.expect([pexpect.EOF, pexpect.TIMEOUT, '# ', '>>> ', '> ', '\$ '])
     return child
 
 
