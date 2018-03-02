@@ -36,13 +36,13 @@ def connect(user, host, passwd):
     ret = child.expect([pexpect.TIMEOUT, ssh_newkey, '[P|p]assword:'])
     if ret == 0:
         print('Error Connecting')
-        exit(1)
+        sys.exit(1)
     if ret == 1:
         child.sendline('yes')
         ret = child.expect([pexpect.TIMEOUT, '[P|p]assword:'])
         if ret == 0:
             print('Error Connecting')
-            exit(1)
+            sys.exit(1)
     child.sendline(passwd)
     child.expect([pexpect.EOF, pexpect.TIMEOUT, '# ', '>>> ', '> ', '\$ '])
     return child
@@ -57,7 +57,7 @@ def main():
         send_cmd(child, 'cat /etc/shadow')
     else:
         print('usage: python autossh.py <host> <username> <password>')
-        exit(1)
+        sys.exit(1)
 
 
 if __name__ == '__main__':
