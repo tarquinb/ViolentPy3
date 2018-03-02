@@ -24,7 +24,7 @@ def connect(host, user, passwd, release):
     :param host: Host
     :param passwd: Password
     :param release: Boolean - Whether or not to release connection_lock
-    :return: SSH Connection
+    :return: Outputs to console
     """
     global found
     global fails
