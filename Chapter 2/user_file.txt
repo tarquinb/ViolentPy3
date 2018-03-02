@@ -1,1 +1,5 @@
+root
+user
+admin
+administrator
 msfadmin

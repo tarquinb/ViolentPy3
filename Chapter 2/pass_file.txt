@@ -1,1 +1,5 @@
+root
+toor
+12345
+password
 msfadmin
