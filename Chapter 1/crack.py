@@ -1,7 +1,8 @@
 """
-A standard dictionary attack with the dictionary and password files passed as command-line arguments
+Execute a standard dictionary attack.
 
-Usage: python crack.py <Hash Algorithm: sha512 / des> <dictionary_filename> <password_filename>
+Usage:
+python crack.py <Hash Algorithm: sha512 / des> <dictionary_file> <pass_file>
 """
 import crypt
 import hashlib
@@ -11,13 +12,16 @@ import os
 
 def test_pass(crypt_pass, dict_file, algo):
     """
-    Takes the encrypted password, dictionary file and hashing algorithm as parameters
+    Test passwords depending on hashing algorithm.
+
     DES:
-    strips out the salt from the first two characters of the encrypted password hash and returns either after finding
-    the password or exhausting the words in the dictionary.
+    strips out the salt from the first two characters of the encrypted password
+    hash and returns either after finding the password or exhausting the words
+    in the dictionary.
     SHA512:
-    ID (A value of 1 denotes MD5; 2 or 2a is Blowfish; 3 is NT Hash; 5 is SHA-256; and 6 is SHA-512.), salt and hash
-    separated by $ This function currently only supports SHA512.
+    ID (A value of 1 denotes MD5; 2 or 2a is Blowfish; 3 is NT Hash; 5 is
+    SHA-256; and 6 is SHA-512.), salt and hash separated by $ This function
+    currently only supports SHA512.
 
     :param crypt_pass: Encrypted password
     :param dict_file: File containing common passwords (plaintext)
@@ -41,7 +45,7 @@ def test_pass(crypt_pass, dict_file, algo):
         with open(dict_file, 'r') as f:
             for word in f.readlines():
                 word = str.encode(word.strip('\n'))
-                crypt_word = hashlib.sha512(salt+word)
+                crypt_word = hashlib.sha512(salt + word)
                 if crypt_word.hexdigest() == crypt_pass.split('$')[3]:
                     print('Found Password: {}\n'.format(word.decode()))
                     return
@@ -75,7 +79,8 @@ def main():
                         print("Cracking password for: {}".format(user))
                         test_pass(crypt_pass, dict_file, algo)
     else:
-        print('Usage: python crack.py <Hashing Algorithm: des / sha512> <dictionary_filename> <password_filename>')
+        print('Usage: python crack.py <Hashing Algorithm: des / sha512>'
+              '<dictionary_filename> <password_filename>')
         exit(1)
     return
 

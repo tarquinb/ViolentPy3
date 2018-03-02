@@ -1,5 +1,6 @@
 """
-Try Grab Banner from ports 1 - 10000
+Try Grab Banner from ports 1 - 10000.
+
 Usage: python bannerGrab.py <vulnerability_list_filename>
 """
 
@@ -11,7 +12,7 @@ import sys
 
 def get_banner(ip, portlist):
     """
-    Scan for and return banners from anIP across a port range
+    Scan for and return banners from anIP across a port range.
 
     :param ip: IP address to scan
     :param portlist: List of ports to scan
@@ -33,7 +34,7 @@ def get_banner(ip, portlist):
 
 def check_vuln(ip, port, vuln_list, bannerstr):
     """
-    Check for known vulnerable services against a pre-defined list of banners
+    Check for known vulnerable services against a pre-defined list of banners.
 
     :param ip: IP address being scanned; type: str
     :param port: Port being scanned
@@ -43,7 +44,8 @@ def check_vuln(ip, port, vuln_list, bannerstr):
     with open(vuln_list, 'r') as f:
         for line in f.readlines():
             if line.strip('\n') in bannerstr:
-                print('IP {} PORT {}  VULN {}'.format(ip, port, line.strip('\n')))
+                print('IP {} PORT {}  VULN {}'.format(ip, port,
+                                                      line.strip('\n')))
             else:
                 continue
 
@@ -65,7 +67,7 @@ def main():
             banner = {}
 
             for i in arange(1, 255):
-                ip = '10.10.10.' + str(i)                   # Change to reflect appropriate IP range
+                ip = '10.10.10.' + str(i)      # Change to appropriate IP range
                 banner[ip] = get_banner(ip, portlist)
 
             for ip in list(banner.keys()):

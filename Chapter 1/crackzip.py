@@ -1,5 +1,6 @@
 """
-Zip file password cracker - Dictionary attack. New Thread for each password being tried.
+Run a dictionary attack for cracking zip file passwords.
+
 Usage: python crackzip.py <zip_filename> <dictionary_filename>
 """
 import sys
@@ -10,12 +11,12 @@ from threading import Thread
 
 def extractfile(file, passwd):
     """
-    Takes zipfile and password as parameters. Extracts zipfile to a directory if password is correct.
+    Extract zipfile to a directory if password is correct.
+
     :param file: Zipfile object to be extracted
     :param passwd: Password
     :return:
     """
-
     try:
         zipf = zipfile.ZipFile(file)
         zipf.extractall(path=os.path.join(file[:-4]), pwd=str.encode(passwd))
@@ -43,7 +44,8 @@ def main():
             with open(pass_file, 'r') as pf:
                 for line in pf.readlines():
                     passwd = line.strip('\n')
-                    attempt = Thread(target=extractfile, args=(archive, passwd))
+                    attempt = Thread(target=extractfile, args=(archive,
+                                                               passwd))
                     attempt.start()
     else:
         print('Usage: python crackzip.py <zip_filename> <dictionary_filename>')
