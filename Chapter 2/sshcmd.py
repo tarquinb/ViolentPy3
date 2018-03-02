@@ -4,14 +4,13 @@ Establish SSH connectiongiven a host and user credentials.
 usage: python autossh.py <host> <username> <password>
 """
 import pexpect
-import os
 import sys
-import time
 
 
 def send_cmd(child, cmd):
     """
-    Send commands to an SSH session
+    Send commands to an SSH session.
+
     :param child: SSH session
     :param cmd: Command String
     :return: Prints output from SSH session to console
@@ -24,7 +23,8 @@ def send_cmd(child, cmd):
 
 def connect(user, host, passwd):
     """
-    Takes a username, host and password. Establishes an SSH connection
+    Take a username, host and password, and establish an SSH connection.
+
     :param user: Username
     :param host: Host
     :param passwd: Password
@@ -53,7 +53,6 @@ def main():
         host = sys.argv[1]
         user = sys.argv[2]
         passwd = sys.argv[3]
-        start_time = time.time()
         child = connect(user, host, passwd)
         send_cmd(child, 'cat /etc/shadow')
     else:

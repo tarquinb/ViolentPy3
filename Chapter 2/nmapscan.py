@@ -1,5 +1,6 @@
 """
-TCP Port scanner using NMAP *Multi-Threaded*
+Run a TCP Port scan using NMAP *Multi-Threaded*.
+
 Usage: python nmapscan.py <Target_Host>
 """
 import nmap
@@ -13,7 +14,8 @@ port_dict = {}
 
 def nmapscan(tgthost, tgtport):
     """
-    Takes Target host and port as parameters. Uses nmap for tcp scanning. Write port state to global dictionary
+    Use nmap for tcp scanning.
+
     :param tgthost: Target Host
     :param tgtport: Target Port
     :return: Writes port state to port_dict

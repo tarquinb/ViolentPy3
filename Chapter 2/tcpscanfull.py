@@ -1,5 +1,6 @@
 """
-TCP Port scanner - Full TCP Connections. Scans ports listed in portlist.txt.
+Run a TCP Port scan using Full TCP Connections.
+
 Usage: python tcpscanfull.py <host>
 """
 import socket as skt
@@ -13,8 +14,8 @@ port_dict = {}
 
 def connscan(tgthost, tgtport):
     """
-    Takes Target host and port as parameters. Attempts a full TCP connection to determine if port is OPEN or CLOSED
-    If OPEN, tries a banner grab. Writes the port status and banner to global dictionary port_dict
+    Attempt a full TCP connection to determine if port is OPEN or CLOSED.
+
     :param tgthost: Target Host
     :param tgtport: Port to scan
     :return: {PORT: [STATUS, BANNER]} - written to global dictionary port_dict
@@ -31,8 +32,8 @@ def connscan(tgthost, tgtport):
 
 def portscan(tgthost, tgtports):
     """
-    Takes Target host and portlist file. Tries to resolve hostname. Scans target host over the range of ports using
-    connscan(). *Multi-threaded*
+    Scan target host over the range of ports using connscan().
+
     :param tgthost: Target Host
     :param tgtports: File containing list of ports to scan
     :return:
@@ -55,7 +56,7 @@ def portscan(tgthost, tgtports):
             attempt = Thread(target=connscan, args=(tgthost, port))
             threads.append(attempt)
             attempt.start()
-    for t in threads:                                                # Wait for all threads to finish
+    for t in threads:                          # Wait for all threads to finish
         t.join()
 
 
@@ -66,7 +67,8 @@ def main():
         portscan(tgthost, portlist)
         end_time = time.time()
         for port in sorted(port_dict.keys()):
-            print('{} TCP {} {}'.format(port, port_dict[port][0], port_dict[port][1]))
+            print('{} TCP {} {}'.format(port, port_dict[port][0],
+                                        port_dict[port][1]))
         print('Scan Duration: {} seconds'.format(end_time - start_time))
     else:
         print('Usage: python tcpscanfull.py <host>')
